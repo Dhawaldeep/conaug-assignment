@@ -1,0 +1,49 @@
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-body">
+        <div class="form-group">
+          <label>Search User</label>
+          <input type="text" placeholder="Type User's Name" (input)="searchFilter($event)" class="form-control">
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">User</th>
+              <th class="text-right" scope="col">
+                <small>*A User can only edit their own profile and delete other user's profile</small>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of (users$ | async).users; let i=index;">
+              <th scope="row">{{i+1}}</th>
+              <td>{{user.fName + ' ' + user.lName}}</td>
+              <td class="text-right">
+                <button type="button" *ngIf="(currentUser$ | async).user.id == user.id" (click)="onEdit(user)" class="btn mr-2 btn-danger">
+                  <fa-icon [icon]="editIcon"></fa-icon>
+                </button>
+                <button type="button" *ngIf="(currentUser$ | async).user.id != user.id" (click)="onDelete(user)" class="btn mr-2 btn-danger">
+                  <fa-icon [icon]="trashIcon"></fa-icon>
+                </button>
+              </td>
+            </tr>
+            <!-- <tr>
+              <th scope="row">2</th>
+              <td>Name</td>
+              <td class="text-right">
+                <button type="button" (click)="onEdit(1)" class="btn mr-2 btn-danger">
+                  <fa-icon [icon]="editIcon"></fa-icon>
+                </button>
+                <button type="button" (click)="onDelete(2)" class="btn btn-danger">
+                  <fa-icon [icon]="trashIcon"></fa-icon>
+                </button>
+              </td>
+            </tr> -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
